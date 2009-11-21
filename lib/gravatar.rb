@@ -12,8 +12,9 @@ module GravatarHelper
   #
   DEFAULT_OPTIONS = {
     # The URL of a default image to display if the given email address does
-    # not have a gravatar.
-    :default => nil,
+    # not have a gravatar. Instead of a url we can genereate also
+    # "identicon" "monsterid" and "wavatar".
+    :default => 'identicon',
     
     # The default size in pixels for the gravatar image (they're square).
     :size => 50,
