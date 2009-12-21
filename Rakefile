@@ -1,5 +1,6 @@
 require 'spec/rake/spectask'
 require 'rake/rdoctask'
+require 'rake/gempackagetask'
 
 desc 'Default: run all specs'
 task :default => :spec
@@ -29,4 +30,32 @@ namespace :doc do
     rdoc.rdoc_files.include('README')
     rdoc.rdoc_files.include('lib/**/*.rb')
   end
+end
+
+PKG_FILES = FileList[
+  '[a-zA-Z]*',
+  'generators/**/*',
+  'lib/**/*',
+  'rails/**/*',
+  'spec/**/*',
+  'tasks/**/*',
+  'test/**/*'
+]
+
+spec = Gem::Specification.new do |s|
+  s.name = "gravatar-plugin"
+  s.version = "0.1.0"
+  s.author = "Scott Woods"
+  s.email = "scott@westarete.com"
+  s.homepage = "http://github.com/woods/gravatar-plugin"
+  s.platform = Gem::Platform::RUBY
+  s.summary = "A Ruby on Rails plugin that supplies view helpers for displaying globally-recognized avatars (gravatars) more easily."
+  s.files = PKG_FILES.to_a
+  s.require_path = "lib"
+  s.has_rdoc = true
+end
+
+desc 'Turn this plugin into a gem.'
+Rake::GemPackageTask.new(spec) do |pkg|
+  pkg.gem_spec = spec
 end
