@@ -33,6 +33,9 @@ module GravatarHelper
     
     # Whether or not to display the gravatars using HTTPS instead of HTTP
     :ssl => false,
+    
+    # Whether avatar should load as background element for faster page loading
+    :fast => true,
   }
   
   # The methods that will be made available to your views.
@@ -49,9 +52,13 @@ module GravatarHelper
     def gravatar(email, options={})
       src = h(gravatar_url(email, options))
       options = DEFAULT_OPTIONS.merge(options)
-      [:class, :alt, :size].each { |opt| options[opt] = h(options[opt]) }
-      "<img class=\"#{options[:class]}\" alt=\"#{options[:alt]}\" width=\"#{options[:size]}\" height=\"#{options[:size]}\" src=\"#{src}\" />"      
-    end
+      raise "size must be in pixels!" if options[:size] =~ /em$/
+      if options[:fast]
+        %Q{<div class="#{options[:class]}" style="width:#{options[:size]}px;height:#{options[:size]}px;background:url(#{src})" />}
+      else
+        %Q{<img class="#{options[:class]}" alt="#{options[:alt]}" width="#{options[:size]}" height="#{options[:size]}" src="#{src}" />}
+      end 
+    end  
     
     # Returns the base Gravatar URL for the given email hash. If ssl evaluates to true,
     # a secure URL will be used instead. This is required when the gravatar is to be 
