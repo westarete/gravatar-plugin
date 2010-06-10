@@ -54,7 +54,7 @@ module GravatarHelper
       options = DEFAULT_OPTIONS.merge(options)
       raise "size must be in pixels!" if options[:size] =~ /em$/
       if options[:fast]
-        %Q{<div class="#{options[:class]}" style="width:#{options[:size]}px;height:#{options[:size]}px;background:url(#{src})" />}
+        %Q{<div class="#{options[:class]}" style="width:#{options[:size]}px;height:#{options[:size]}px;background:url(#{src}) no-repeat;" />}
       else
         %Q{<img class="#{options[:class]}" alt="#{options[:alt]}" width="#{options[:size]}" height="#{options[:size]}" src="#{src}" />}
       end 
