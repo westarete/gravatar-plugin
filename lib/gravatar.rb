@@ -51,14 +51,16 @@ module GravatarHelper
     # Return the HTML img tag for the given email address's gravatar.
     def gravatar(email, options={})
       src = h(gravatar_url(email, options))
-      options = DEFAULT_OPTIONS.merge(options)
-      raise "size must be in pixels!" if options[:size] =~ /em$/
-      if options[:fast]
-        %Q{<div class="#{options[:class]}" style="width:#{options[:size]}px;height:#{options[:size]}px;background:url(#{src}) no-repeat;" />}
+      options.reverse_merge!( DEFAULT_OPTIONS )
+      size = options.delete(:size)
+      size = "#{size}px" if size.is_a?(Integer)
+      if options.delete(:fast)
+        options[:style] = "width:#{size};height:#{size};background:url(#{src}) no-repeat;"
+        content_tag :div, options
       else
-        %Q{<img class="#{options[:class]}" alt="#{options[:alt]}" width="#{options[:size]}" height="#{options[:size]}" src="#{src}" />}
-      end 
-    end  
+         image_tag src, options.merge(:width => size, :height => size)
+      end
+    end
     
     # Returns the base Gravatar URL for the given email hash. If ssl evaluates to true,
     # a secure URL will be used instead. This is required when the gravatar is to be 
