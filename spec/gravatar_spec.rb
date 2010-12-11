@@ -35,3 +35,9 @@ describe "gravatar_url with default settings" do
   end  
   
 end
+
+describe "gravatar with a custom title option" do
+  it "should include the title in the result" do
+    gravatar('example@example.com', :title => "This is a title attribute").should match(/This is a title attribute/)
+  end
+end
