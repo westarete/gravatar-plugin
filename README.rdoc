@@ -1,6 +1,6 @@
-== Gravatar Plugin
+= Gravatar Plugin for Ruby on Rails
 
-This plugin provides a handful of view helpers for displaying gravatars 
+This Ruby on Rails plugin provides a handful of view helpers for displaying gravatars 
 (globally-recognized avatars). 
 
 Gravatars allow users to configure an avatar to go with their email address at
@@ -11,7 +11,7 @@ set up an avatar for each site that they post on.
 
 == Installation
 
-  cd ~/myapp
+  cd ~/my-rails-app
   ruby script/plugin install git://github.com/westarete/gravatar-plugin.git
 
 or, if you're using piston[http://piston.rubyforge.org] (worth it!):
