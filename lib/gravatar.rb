@@ -12,7 +12,8 @@ module GravatarHelper
   #
   DEFAULT_OPTIONS = {
     # The URL of a default image to display if the given email address does
-    # not have a gravatar.
+    # not have a gravatar. Instead of a url we can also use
+    # "identicon" "monsterid" and "wavatar".
     :default => nil,
     
     # The default size in pixels for the gravatar image (they're square).
@@ -35,6 +36,9 @@ module GravatarHelper
     
     # Whether or not to display the gravatars using HTTPS instead of HTTP
     :ssl => false,
+    
+    # Whether avatar should load as background element for faster page loading
+    :fast => true,
   }
   
   # The methods that will be made available to your views.
@@ -50,9 +54,15 @@ module GravatarHelper
     # Return the HTML img tag for the given email address's gravatar.
     def gravatar(email, options={})
       src = h(gravatar_url(email, options))
-      options = DEFAULT_OPTIONS.merge(options)
-      [:class, :alt, :size, :title].each { |opt| options[opt] = h(options[opt]) }
-      "<img class=\"#{options[:class]}\" alt=\"#{options[:alt]}\" title=\"#{options[:title]}\" width=\"#{options[:size]}\" height=\"#{options[:size]}\" src=\"#{src}\" />"
+      options.reverse_merge!(DEFAULT_OPTIONS)
+      size = options.delete(:size)
+      size = "#{size}px" if size.is_a?(Integer)
+      if options.delete(:fast)
+        options[:style] = "width:#{size};height:#{size};background:url(#{src}) no-repeat;"
+        content_tag :div, options
+      else
+         image_tag src, options.merge(:width => size, :height => size)
+      end
     end
     
     # Returns the base Gravatar URL for the given email hash. If ssl evaluates to true,
