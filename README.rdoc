@@ -12,12 +12,7 @@ set up an avatar for each site that they post on.
 == Installation
 
   cd ~/my-rails-app
-  ruby script/plugin install git://github.com/westarete/gravatar-plugin.git
-
-or, if you're using piston[http://piston.rubyforge.org] (worth it!):
-
-  cd ~/myapp/vendor/plugins
-  piston import git://github.com/westarete/gravatar-plugin.git
+  rails plugin install git://github.com/westarete/gravatar-plugin.git
 
 == Example
 
