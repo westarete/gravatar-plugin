@@ -59,7 +59,7 @@ module GravatarHelper
       size = "#{size}px" if size.is_a?(Integer)
       if options.delete(:fast)
         options[:style] = "width:#{size};height:#{size};background:url(#{src}) no-repeat;"
-        content_tag :div, options
+        content_tag :div, nil, options
       else
          image_tag src, options.merge(:width => size, :height => size)
       end
